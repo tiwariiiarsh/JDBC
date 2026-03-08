@@ -15,7 +15,11 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-
+        try{
+            Connection connection = DriverManager.getConnection(url,userName,password);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
 
     }
 }
