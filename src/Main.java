@@ -1,4 +1,6 @@
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.Scanner;
 
 public class Main {
 
@@ -128,22 +130,56 @@ public class Main {
 
 
 //  -------------------------Update query---------------------------------------
-        try{
-            Connection connection = DriverManager.getConnection(url,userName,password);
-//            query will execute through statement interface
-            String query = "UPDATE Students SET marks = ? WHERE id = ?";
-//            Statement statement = connection.createStatement();   //query is complied every time before run
-            PreparedStatement preparedStatement = connection.prepareStatement(query);   //query is compiled once here throughout code
-            preparedStatement.setDouble(1,89);
-            preparedStatement.setInt(2,4);
-            int rowsAffected = preparedStatement.executeUpdate();
-            if(rowsAffected>0){
-                System.out.println("Data updated successfully !!");
-            }else{
-                System.out.println("Data not updated ! ");
+//        try{
+//            Connection connection = DriverManager.getConnection(url,userName,password);
+////            query will execute through statement interface
+//            String query = "UPDATE Students SET marks = ? WHERE id = ?";
+////            Statement statement = connection.createStatement();   //query is complied every time before run
+//            PreparedStatement preparedStatement = connection.prepareStatement(query);   //query is compiled once here throughout code
+//            preparedStatement.setDouble(1,89);
+//            preparedStatement.setInt(2,4);
+//            int rowsAffected = preparedStatement.executeUpdate();
+//            if(rowsAffected>0){
+//                System.out.println("Data updated successfully !!");
+//            }else{
+//                System.out.println("Data not updated ! ");
+//            }
+//
+//        }catch (SQLException e){
+//            System.out.println(e.getMessage());
+//        }
+
+
+// ========================= Batch Operation ============================================
+
+        try {
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            Scanner sc = new Scanner(System.in);
+            Statement statement = connection.createStatement();
+            while (true){
+                System.out.println("Enter name:  ");
+                String name = sc.next();
+                System.out.println("Enter age:  ");
+                int age = sc.nextInt();
+                System.out.println("Enter Marks:  ");
+                double marks = sc.nextDouble();
+                System.out.println("Enter more data(Y/N):  ");
+                String choice = sc.next();
+                String query = String.format("INSERT INTO Students(name,age,marks) VALUES('%s', %d, %f)",name,age,marks);
+                statement.addBatch(query);
+                if (choice.toUpperCase().equals("N")){
+                    break;
+                }
+            }
+            int[] arr = statement.executeBatch();
+            for (int i=0;i<arr.length;i++){
+                if (arr[i]==0){
+                    System.out.println("Query "+i+" is not executed successfully !");
+                }
             }
 
-        }catch (SQLException e){
+
+        }catch (SQLException  e){
             System.out.println(e.getMessage());
         }
 
