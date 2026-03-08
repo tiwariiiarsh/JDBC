@@ -49,13 +49,29 @@ public class Main {
 
 //  ===================================Update query==============================================
 
-            String query = String.format("UPDATE Students SET marks = %f WHERE id = %d",98.8,3);
+//            String query = String.format("UPDATE Students SET marks = %f WHERE id = %d",98.8,3);
+////            when we insert,delete,update data from DB through query--> use executeUpdate
+//            int rowsAffected = statement.executeUpdate(query);
+//            if(rowsAffected>0){
+//                System.out.println("Data updated successfully !!");
+//            }else{
+//                System.out.println("Data not updated ");
+//            }
+//
+//        }catch (SQLException e){
+//            System.out.println(e.getMessage());
+//        }
+
+
+//  =========================== Delete query ============================================
+
+            String query = String.format("DELETE FROM Students WHERE id=%d",3);
 //            when we insert,delete,update data from DB through query--> use executeUpdate
             int rowsAffected = statement.executeUpdate(query);
             if(rowsAffected>0){
-                System.out.println("Data updated successfully !!");
+                System.out.println("deleted successfully !!");
             }else{
-                System.out.println("Data not updated ");
+                System.out.println("Not deleted updated !");
             }
 
         }catch (SQLException e){
