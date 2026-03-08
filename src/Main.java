@@ -15,10 +15,11 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        try{
-            Connection connection = DriverManager.getConnection(url,userName,password);
-//            query will execute through statement interface
-            Statement statement = connection.createStatement();
+//  ================= execution of CRUD Operation through Statement Interface===========================================
+//      try{
+//            Connection connection = DriverManager.getConnection(url,userName,password);
+////            query will execute through statement interface
+//            Statement statement = connection.createStatement();
 
 //   --------------------------------Retrieval  query-------------------------------------
 //            String query = "SELECT*FROM Students";
@@ -65,18 +66,86 @@ public class Main {
 
 //  =========================== Delete query ============================================
 
-            String query = String.format("DELETE FROM Students WHERE id=%d",3);
-//            when we insert,delete,update data from DB through query--> use executeUpdate
-            int rowsAffected = statement.executeUpdate(query);
+//            String query = String.format("DELETE FROM Students WHERE id=%d",3);
+////            when we insert,delete,update data from DB through query--> use executeUpdate
+//            int rowsAffected = statement.executeUpdate(query);
+//            if(rowsAffected>0){
+//                System.out.println("deleted successfully !!");
+//            }else{
+//                System.out.println("Not deleted updated !");
+//            }
+//
+//        }catch (SQLException e){
+//            System.out.println(e.getMessage());
+//        }
+
+
+//===================CRUD Operation through PreparedStatement Interface====================================
+//
+
+//   ----------------------------Insertion Operation---------------------------------
+//        try{
+//            Connection connection = DriverManager.getConnection(url,userName,password);
+////            query will execute through statement interface
+//            String query = "INSERT INTO Students(name,age,marks) VALUES(?,?,?)";
+////            Statement statement = connection.createStatement();   //query is complied every time before run
+//            PreparedStatement preparedStatement = connection.prepareStatement(query);   //query is compiled once here throughout code
+//            preparedStatement.setString(1,"Ankita");
+//            preparedStatement.setInt(2,20);
+//            preparedStatement.setDouble(3,93.3);
+//
+//            int rowsAffected = preparedStatement.executeUpdate();
+//            if(rowsAffected>0){
+//                System.out.println("Data inserted successfully !!");
+//            }else{
+//                System.out.println("Data not inserted ");
+//            }
+//        }catch (SQLException e){
+//            System.out.println(e.getMessage());
+//        }
+
+
+//  -----------------------------Retrieval Operation-------------------------------------------------
+
+//        try{
+//            Connection connection = DriverManager.getConnection(url,userName,password);
+////            query will execute through statement interface
+//            String query = "SELECT*FROM Students WHERE id = ?";
+////            Statement statement = connection.createStatement();   //query is complied every time before run
+//            PreparedStatement preparedStatement = connection.prepareStatement(query);   //query is compiled once here throughout code
+//            preparedStatement.setInt(1,1);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()){
+//                double marks = resultSet.getDouble("marks");
+//                System.out.println("Marks:  "+marks);
+//            }else{
+//                System.out.println("Marks not found !");
+//            }
+//
+//        }catch (SQLException e){
+//            System.out.println(e.getMessage());
+//        }
+
+
+//  -------------------------Update query---------------------------------------
+        try{
+            Connection connection = DriverManager.getConnection(url,userName,password);
+//            query will execute through statement interface
+            String query = "UPDATE Students SET marks = ? WHERE id = ?";
+//            Statement statement = connection.createStatement();   //query is complied every time before run
+            PreparedStatement preparedStatement = connection.prepareStatement(query);   //query is compiled once here throughout code
+            preparedStatement.setDouble(1,89);
+            preparedStatement.setInt(2,4);
+            int rowsAffected = preparedStatement.executeUpdate();
             if(rowsAffected>0){
-                System.out.println("deleted successfully !!");
+                System.out.println("Data updated successfully !!");
             }else{
-                System.out.println("Not deleted updated !");
+                System.out.println("Data not updated ! ");
             }
 
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
 
-    }
+        }
 }
